@@ -86,7 +86,7 @@ For each frame in the BioEMU trajectory:
 Each pocket centroid is projected onto a 3D spatial hash grid (bin size `b = 0.5 Å`).
 A pocket is **persistent** if its bin appears in ≥ `τ = 30%` of frames:
 
-$$\text{iscryptic}(p) = \mathbf{1}\!\left[\frac{\#\{f : \text{centroid}(p,f) \in \text{bin}(p)\}}{N_\text{frames}} < \tau\right]$$
+$$\text{is}_\text{cryptic}(p) = \mathbf{1}\!\left[\frac{\lvert\{f : \text{centroid}(p,f) \in \text{bin}(p)\}\rvert}{N_\text{frames}} < \tau\right]$$
 
 This mirrors the operational definition from Cimermancic et al. (2016) and
 Vajda et al. (2018).
