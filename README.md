@@ -8,6 +8,8 @@
 > [!NOTE]
 > The src and notebooks 1 and 2 are extensions and refactor of the original class demo notebook, which is also included for reference.  The new code is modularised into a reusable API and includes some additional features. The original notebook can be found in `notebooks/original_implementation_notebook_ensemble.ipynb`.
 
+> This is just a proof-of-concept implementation to demonstrate the potential of ensemble-based methods and GNNs for pocket detection.  It is not intended as a production-ready tool, and there are many avenues for improvement (e.g. more principled evaluation, hyperparameter tuning, additional features).  The focus is on illustrating the end-to-end pipeline and key methodological choices.
+
 ---
 
 ## Overview
