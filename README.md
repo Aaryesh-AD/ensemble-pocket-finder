@@ -225,8 +225,8 @@ Python package manager.
 
 ```bash
 # Clone
-git https://github.com/Aaryesh-AD/Ensemble_emulation.git
-cd Ensemble_emulation
+git https://github.com/Aaryesh-AD/ensemble-pocket-finder.git
+cd ensemble-pocket-finder
 
 # Install uv (if not already installed)
 curl -LsSf https://astral.sh/uv/install.sh | sh
