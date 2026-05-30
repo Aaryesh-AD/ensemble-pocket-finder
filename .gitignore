@@ -5,9 +5,11 @@ build/
 dist/
 wheels/
 *.egg-info
+*cache/
 
 # Virtual environments
 .venv
 
 # My env specific
 .DS_Store
+temp/
