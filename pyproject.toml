@@ -1,7 +1,7 @@
 [project]
 name = "ensemble-emulation"
 version = "0.1.0"
-description = "Add your description here"
+description = "Ensemble pocket detection using BioEMU conformational ensembles and a graph attention network."
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
