@@ -1,0 +1,168 @@
+<svg viewBox="0 0 2000 450" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      body { background: #383838; }
+      .bg { fill: #383838; }
+      .node-box { fill: #3b82f6; stroke: #1e40af; stroke-width: 2.5; }
+      .gat-box { fill: #8b5cf6; stroke: #6d28d9; stroke-width: 2.5; }
+      .pool-box { fill: #06b6d4; stroke: #0891b2; stroke-width: 2.5; }
+      .fusion-box { fill: #10b981; stroke: #059669; stroke-width: 2.5; }
+      .text { font-family: 'Segoe UI', Arial, sans-serif; font-size: 20px; font-weight: 500; text-anchor: middle; fill: white; }
+      .label { font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; text-anchor: middle; fill: #ffffff; }
+      .title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 20px; font-weight: 700; text-anchor: middle; fill: #ffffff; }
+      .arrow { stroke: #ffffff; stroke-width: 1.5; fill: none; marker-end: url(#arrowhead); }
+      .dashed { stroke-dasharray: 6,4; stroke: #ffffff; }
+    </style>
+    <marker id="arrowhead" markerWidth="12" markerHeight="12" refX="10" refY="4" orient="auto">
+      <polygon points="0 0, 12 4, 0 8" fill="#ffffff"/>
+    </marker>
+  </defs>
+
+  <rect width="2000" height="450" class="bg"/>
+
+  <!-- INPUT -->
+  <rect x="20" y="80" width="140" height="100" class="node-box" rx="8"/>
+  <text x="90" y="120" class="text">Graph Input</text>
+  <text x="90" y="140" class="text">(x, edges)</text>
+
+  <!-- Arrow -->
+  <path d="M 160 130 L 200 130" class="arrow"/>
+
+  <!-- NODE ENCODER -->
+  <rect x="200" y="80" width="140" height="100" class="node-box" rx="8"/>
+  <text x="270" y="115" class="text">Node</text>
+  <text x="270" y="135" class="text">Encoder</text>
+  <text x="270" y="155" class="label">Linear → ReLU</text>
+
+  <!-- Arrow -->
+  <path d="M 340 130 L 380 130" class="arrow"/>
+
+  <!-- GAT 1 -->
+  <rect x="380" y="80" width="140" height="100" class="gat-box" rx="8"/>
+  <text x="450" y="115" class="text">GAT 1</text>
+  <text x="450" y="135" class="text">4 heads</text>
+  <text x="450" y="155" class="label">+ GraphNorm</text>
+
+  <!-- Arrow -->
+  <path d="M 520 130 L 560 130" class="arrow"/>
+
+  <!-- GAT 2 -->
+  <rect x="560" y="80" width="140" height="100" class="gat-box" rx="8"/>
+  <text x="630" y="115" class="text">GAT 2</text>
+  <text x="630" y="135" class="text">4 heads</text>
+  <text x="630" y="155" class="label">+ Residual</text>
+
+  <!-- Arrow -->
+  <path d="M 700 130 L 740 130" class="arrow"/>
+
+  <!-- GAT 3 -->
+  <rect x="740" y="80" width="140" height="100" class="gat-box" rx="8"/>
+  <text x="810" y="115" class="text">GAT 3</text>
+  <text x="810" y="135" class="text">1 head</text>
+  <text x="810" y="155" class="label">+ GraphNorm</text>
+
+  <!-- Arrow splitting -->
+  <path d="M 880 130 L 920 130" class="arrow"/>
+
+  <!-- POOLING SECTION -->
+  <g>
+    <!-- Mean Pool -->
+    <rect x="920" y="40" width="120" height="70" class="pool-box" rx="6"/>
+    <text x="980" y="65" class="text">Mean</text>
+    <text x="980" y="82" class="text">Pool</text>
+
+    <!-- Max Pool -->
+    <rect x="920" y="120" width="120" height="70" class="pool-box" rx="6"/>
+    <text x="980" y="145" class="text">Max</text>
+    <text x="980" y="162" class="text">Pool</text>
+
+    <!-- Sum Pool -->
+    <rect x="920" y="200" width="120" height="70" class="pool-box" rx="6"/>
+    <text x="980" y="225" class="text">Sum</text>
+    <text x="980" y="242" class="text">Pool</text>
+  </g>
+
+  <!-- Global Features (parallel) -->
+  <rect x="20" y="220" width="140" height="100" class="node-box" rx="8"/>
+  <text x="90" y="255" class="text">Global</text>
+  <text x="90" y="275" class="text">Features</text>
+
+  <!-- Arrow -->
+  <path d="M 160 270 L 200 270" class="arrow"/>
+
+  <!-- Global Encoder -->
+  <rect x="200" y="220" width="140" height="100" class="node-box" rx="8"/>
+  <text x="270" y="255" class="text">Global</text>
+  <text x="270" y="275" class="text">Encoder</text>
+  <text x="270" y="295" class="label">Linear → ReLU</text>
+
+  <!-- Arrows to concat -->
+  <path d="M 1040 75 L 1100 300" class="arrow"/>
+  <path d="M 1040 155 L 1100 300" class="arrow"/>
+  <path d="M 1040 235 L 1100 300" class="arrow"/>
+  <path d="M 340 270 L 1100 300" class="arrow"/>
+
+  <!-- CONCATENATION -->
+  <rect x="1100" y="265" width="160" height="70" class="fusion-box" rx="8"/>
+  <text x="1180" y="295" class="text">Concatenate</text>
+  <text x="1180" y="315" class="label">[mean, max, sum, u]</text>
+
+  <!-- Arrow -->
+  <path d="M 1260 300 L 1310 300" class="arrow"/>
+
+  <!-- FUSION HEAD 1 -->
+  <rect x="1310" y="270" width="130" height="60" class="fusion-box" rx="6"/>
+  <text x="1375" y="295" class="text">Linear 256</text>
+  <text x="1375" y="310" class="label">→ ReLU</text>
+
+  <!-- Arrow -->
+  <path d="M 1440 300 L 1480 300" class="arrow"/>
+
+  <!-- FUSION HEAD 2 -->
+  <rect x="1480" y="270" width="130" height="60" class="fusion-box" rx="6"/>
+  <text x="1545" y="295" class="text">Linear 128</text>
+  <text x="1545" y="310" class="label">→ ReLU</text>
+
+  <!-- Arrow -->
+  <path d="M 1610 300 L 1650 300" class="arrow"/>
+
+  <!-- FUSION HEAD 3 -->
+  <rect x="1650" y="270" width="130" height="60" class="fusion-box" rx="6"/>
+  <text x="1715" y="295" class="text">Linear 64</text>
+  <text x="1715" y="310" class="label">→ ReLU</text>
+
+  <!-- Arrow -->
+  <path d="M 1780 300 L 1820 300" class="arrow"/>
+
+  <!-- OUTPUT -->
+  <rect x="1820" y="270" width="130" height="60" class="node-box" rx="6"/>
+  <text x="1885" y="295" class="text">Logits</text>
+  <text x="1885" y="310" class="label">Linear 1</text>
+
+  <!-- Legend -->
+  <g transform="translate(0, 380)">
+    <line x1="0" y1="0" x2="2000" y2="0" stroke="#ffffff" stroke-width="1"/>
+    
+    <g transform="translate(20, 20)">
+      <rect width="20" height="20" class="node-box" rx="3"/>
+      <text x="30" y="15" class="label" style="text-anchor: start; fill: #ffffff;">Input / Output</text>
+    </g>
+
+    <g transform="translate(300, 20)">
+      <rect width="20" height="20" class="gat-box" rx="3"/>
+      <text x="30" y="15" class="label" style="text-anchor: start; fill: #ffffff;">Graph Attention</text>
+    </g>
+
+    <g transform="translate(650, 20)">
+      <rect width="20" height="20" class="pool-box" rx="3"/>
+      <text x="30" y="15" class="label" style="text-anchor: start; fill: #ffffff;">Graph Pooling</text>
+    </g>
+
+    <g transform="translate(950, 20)">
+      <rect width="20" height="20" class="fusion-box" rx="3"/>
+      <text x="30" y="15" class="label" style="text-anchor: start; fill: #ffffff;">Fusion / Prediction Head</text>
+    </g>
+
+    <text x="1400" y="35" class="label" style="fill: #ffffff;">Focal Loss (α=0.85, γ=2.0) for binary classification</text>
+  </g>
+</svg>
